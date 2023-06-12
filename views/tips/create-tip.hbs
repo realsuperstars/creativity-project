@@ -1,0 +1,42 @@
+<div>
+
+  <h2>Create a tip</h2>
+
+  <form method="POST" action="/tips/create">
+    <label>
+      Title:
+      <input type="text" name="title" />
+    </label>
+
+
+   <label>
+  Level:
+  <select name="level">
+      <option value="beginner">Beginner</option>
+      <option value="intermediate">Intermediate</option>
+      <option value="advanced">Advanced</option>
+  </select>
+</label>
+
+<label>
+  Category:
+  <select name="category">
+   
+      <option value="category1">Category 1</option>
+      <option value="category2">Category 2</option>
+      <option value="category3">Category 3</option>
+   </select>
+</label>
+
+  
+  
+    <label>
+      Description:
+      <textarea name="description" cols="30" rows="4"> </textarea>
+    </label>
+
+    <button type="submit"> Create </button>
+  
+  </form>
+
+</div>

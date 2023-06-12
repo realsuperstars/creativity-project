@@ -1,0 +1,20 @@
+<h1>Tips for you</h1>
+
+{{#each tips}}
+    <section>
+        <p>
+            Title: {{this.title}} <br />
+            Level: {{this.level}} <br />
+            Category: {{this.category}} <br />
+            Description: {{this.description}} <br />
+          <!--  <a href="/books/{{this._id}}">More details</a>
+            <a href="/books/{{_id}}/edit">Edit</a> {{!-- link to redirect to the edit form for each specific book  --}}-->
+        </p>
+
+      <!--   <form action="/books/{{_id}}/delete" method="POST">
+          <button>Delete</button>
+         </form> -->
+ 
+
+    </section>
+{{/each}}
