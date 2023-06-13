@@ -11,9 +11,9 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 ///Display all the tips
 router.get("/", (req, res, next) => {
   Tip.find()
-    /*.populate("author")*/
+  .populate("userId") 
     .then((tipsFromDB) => {
-      //console.log(tipsFromDB)
+      console.log(tipsFromDB)
 
       const data = {
         tips: tipsFromDB,
@@ -38,12 +38,16 @@ router.post("/create", (req, res, next) => {
     title: req.body.title,
     level: req.body.level,
     category: req.body.category,
-    description: req.body.description,
+    description: req.body.description,  
+    userId: req.session.currentUser._id
   };
 
   Tip.create(newTip)
+  // .populate("userId") // POPULATE to display user name associated with a this tip
     .then((newTip) => {
       res.redirect("/tips");
+      
+
     })
     .catch((e) => {
       console.log("error creating a new tip", e);
@@ -52,7 +56,7 @@ router.post("/create", (req, res, next) => {
 });
 
 // GET // EDIT: display form
-router.get("/:tipId/edit", (req, res, next) => {
+router.get("/:tipId/edit",isLoggedIn , (req, res, next) => {
   const { tipId } = req.params;
 
   Tip.findById(tipId)
@@ -62,6 +66,7 @@ router.get("/:tipId/edit", (req, res, next) => {
     })
     .catch((error) => next(error));
 });
+
 
 // POST // EDIT: route to actually make updates on a specific tip
 router.post("/:tipId/edit", isLoggedIn, (req, res, next) => {
@@ -86,14 +91,16 @@ router.post("/:tipId/delete", isLoggedIn, (req, res, next) => {
     .catch((error) => next(error));
 });
 
-// GET / tip -details // show more details of a tip //
+
+// GET / tip - details // show more details of a tip //
 
 router.get("/:tipId", (req, res, next) => {
   const id = req.params.tipId;
 
   Tip.findById(id)
-    //.populate("user") --- HINT
+   .populate("userId") 
     .then((oneTipFromDB) => {
+      
       res.render("tips/tips-detail", oneTipFromDB);
     })
     .catch((e) => {
@@ -101,5 +108,9 @@ router.get("/:tipId", (req, res, next) => {
       next(e);
     });
 });
+
+
+
+
 
 module.exports = router;
