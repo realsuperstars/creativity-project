@@ -1,0 +1,39 @@
+{{!-- views/books/books-edit.hbs --}}
+
+<h2>Edit the tip: {{title}}</h2>
+
+<form action="/tips/{{_id}}/edit" method="post">
+  <label> Title:
+    <input type="text" name="title" value="{{title}}" />
+  </label>
+
+
+
+<label>
+  Level:
+  <select name="level">
+      <option value="beginner">Beginner</option>
+      <option value="intermediate">Intermediate</option>
+      <option value="advanced">Advanced</option>
+  </select>
+</label>
+
+<label>
+  Category:
+  <select name="category">
+   
+      <option value="category1">Category 1</option>
+      <option value="category2">Category 2</option>
+      <option value="category3">Category 3</option>
+   </select>
+</label>
+
+
+
+
+    <label> Description:
+    <textarea name="description" cols="30" rows="4">{{description}}</textarea>
+  </label>
+
+  <button>Save changes</button>
+</form>
