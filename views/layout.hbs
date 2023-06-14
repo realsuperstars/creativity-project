@@ -14,10 +14,14 @@
          <a href="/">Home</a>
          <a href="/tips">Tips</a>
          <a href="/tips/create">Create new tip</a>
-         <a href="/auth/signup">Sign up</a>
-         <a href="/auth/login">Log in</a>
+
+         {{#if currentUser}}
          <a href="/auth/logout">Log out</a>
-      </nav>
+         {{else}}
+         <a href="/auth/signup">Sign up</a>
+         <a href="/auth/login">Log in</a> 
+       {{/if}}
+       </nav>
 
 
     {{{body}}}

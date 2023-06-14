@@ -9,14 +9,51 @@ const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 ///Display all the tips
+
+// // Pass the data to the template
+// res.render('tips-list', { tip, isCurrentUser });
+
+// router.get("/", (req, res, next) => {
+
+//   const currentUser = req.session.currentUser // the currently logged-in user object
+// const isCurrentUser = (userId._id === currentUser._id); // Perform the logical comparison
+
+//   Tip.find()
+//   .populate("userId")
+//     .then((tipsFromDB) => {
+//       console.log(tipsFromDB)
+
+//       const data = {
+//         tips: tipsFromDB,
+//       };
+
+//       res.render("tips/tips-list", data);
+//     })
+//     .catch((e) => {
+//       console.log("error getting tips from DB", e);
+//       next(e);
+//     });
+// });
+
 router.get("/", (req, res, next) => {
+  const currentUser = req.session.currentUser; // the currently logged-in user object
+  
+
   Tip.find()
-  .populate("userId") 
+    .populate("userId")
+    .lean()
     .then((tipsFromDB) => {
-      console.log(tipsFromDB)
+      // console.log(tipsFromDB);
+      const tipsMapped = tipsFromDB.map(tip => {
+        const isCurrentUser = (tip.userId._id.toString() === currentUser._id);
+        
+        
+        return { ...tip, isCurrentUser }})
+      
+
 
       const data = {
-        tips: tipsFromDB,
+        tips: tipsMapped,
       };
 
       res.render("tips/tips-list", data);
@@ -38,16 +75,14 @@ router.post("/create", (req, res, next) => {
     title: req.body.title,
     level: req.body.level,
     category: req.body.category,
-    description: req.body.description,  
-    userId: req.session.currentUser._id
+    description: req.body.description,
+    userId: req.session.currentUser._id,
   };
 
   Tip.create(newTip)
-  // .populate("userId") // POPULATE to display user name associated with a this tip
+    // .populate("userId") // POPULATE to display user name associated with a this tip
     .then((newTip) => {
       res.redirect("/tips");
-      
-
     })
     .catch((e) => {
       console.log("error creating a new tip", e);
@@ -56,7 +91,7 @@ router.post("/create", (req, res, next) => {
 });
 
 // GET // EDIT: display form
-router.get("/:tipId/edit",isLoggedIn , (req, res, next) => {
+router.get("/:tipId/edit", isLoggedIn, (req, res, next) => {
   const { tipId } = req.params;
 
   Tip.findById(tipId)
@@ -66,7 +101,6 @@ router.get("/:tipId/edit",isLoggedIn , (req, res, next) => {
     })
     .catch((error) => next(error));
 });
-
 
 // POST // EDIT: route to actually make updates on a specific tip
 router.post("/:tipId/edit", isLoggedIn, (req, res, next) => {
@@ -91,26 +125,24 @@ router.post("/:tipId/delete", isLoggedIn, (req, res, next) => {
     .catch((error) => next(error));
 });
 
-
 // GET / tip - details // show more details of a tip //
 
 router.get("/:tipId", (req, res, next) => {
   const id = req.params.tipId;
-
+  const currentUser = req.session.currentUser;
   Tip.findById(id)
-   .populate("userId") 
+    .populate("userId")
     .then((oneTipFromDB) => {
-      
-      res.render("tips/tips-detail", oneTipFromDB);
+
+      const isCurrentUser = (oneTipFromDB.userId._id.toString() === currentUser._id);
+
+
+      res.render("tips/tips-detail", {oneTipFromDB, isCurrentUser});
     })
     .catch((e) => {
       console.log("error getting tips from DB", e);
       next(e);
     });
 });
-
-
-
-
 
 module.exports = router;

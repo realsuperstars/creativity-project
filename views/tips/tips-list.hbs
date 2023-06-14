@@ -1,25 +1,33 @@
-
-
 <h1>Tips for you</h1>
 
 {{#each tips}}
   <section>
     <p>
-      Title: {{this.title}} <br />
-      Creator: {{this.userId.username}} <br />ś
-      Level: {{this.level}} <br />
-      Category: {{this.category}} <br />
-      Description: {{this.description}} <br />
-      
+      Title:
+      {{this.title}}
+      <br />
+      Creator:
+      {{this.userId.username}}
+      <br />
+      Level:
+      {{this.level}}
+      <br />
+      Category:
+      {{this.category}}
+      <br />
+      Description:
+      {{this.description}}
+      <br />
+
       <a href="/tips/{{this._id}}">More details</a>
 
-      {{#if this.userId._id === currentUser._id}}
+      {{#if isCurrentUser}}
         <a href="/tips/{{this._id}}/edit">Edit</a>
         <form action="/tips/{{this._id}}/delete" method="POST">
           <button>Delete</button>
         </form>
       {{/if}}
+
     </p>
   </section>
 {{/each}}
-

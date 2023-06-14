@@ -1,4 +1,4 @@
-<h1>{{title}}</h1>
+<h1>{{oneTipFromDB.title}}</h1>
 
 <hr />
 
@@ -7,28 +7,29 @@
 <p>{{description}}</p>    HINT. -->
 
 <h3>Creator:</h3>
-<p>{{userId.username}}</p>
+<p>{{oneTipFromDB.userId.username}}</p>
 
 <hr />
 
 <h3>Category:</h3>
-<p>{{category}}</p>
+<p>{{oneTipFromDB.category}}</p>
 
 <hr />
 
 <h3>Level:</h3>
-<p>{{level}}</p>
+<p>{{oneTipFromDB.level}}</p>
 
 <hr />
 
 <h3>Description:</h3>
-<p>{{description}}</p>
+<p>{{oneTipFromDB.description}}</p>
 
-<a href="/tips/{{_id}}/edit">Edit</a>
-
-<form action="/tips/{{_id}}/delete" method="POST">
-  <button>Delete</button>
-</form>
+{{#if isCurrentUser}}
+        <a href="/tips/{{this._id}}/edit">Edit</a>
+        <form action="/tips/{{this._id}}/delete" method="POST">
+          <button>Delete</button>
+        </form>
+      {{/if}}
 
 <!-- IMAGE BONUS. -->
 
