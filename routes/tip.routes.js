@@ -20,7 +20,7 @@ router.get("/", (req, res, next) => {
     .then((tipsFromDB) => {
       // console.log(tipsFromDB);
       const tipsMapped = tipsFromDB.map(tip => {
-        const isCurrentUser = (tip.userId._id.toString() === currentUser._id);
+        const isCurrentUser = (tip.userId._id.toString() === currentUser?._id);
         
         
         return { ...tip, isCurrentUser }})
