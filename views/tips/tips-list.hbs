@@ -23,19 +23,23 @@
       Description:
       {{this.description}}
       <br />
+          </p>
 
-      <a href="/tips/{{this._id}}">More details</a>
+<div class= "btn-row" >
+      <a class= "a-button" href="/tips/{{this._id}}">More details</a>
 
       {{#if isCurrentUser}}
-        <a type="button" class="btn btn-outline-success" href="/tips/{{this._id}}/edit">Edit</a>
+        <a type="button" class= "a-button" href="/tips/{{this._id}}/edit">Edit</a>
         <form action="/tips/{{this._id}}/delete" method="POST">
-          <button type="button" class="btn btn-outline-success">Delete</button>
+          <button type="button" class="a-button">Delete</button>
         </form>
       {{/if}}
 
-    </p>
+
   </div>
+    </div>
+
 {{else}}
-  <p>There are no tips yet!</p>
+  <p class="white-par">There are no tips yet!</p>
 {{/each}}
 </div>
