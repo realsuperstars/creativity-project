@@ -240,6 +240,12 @@ form:has(.a-button) {
   line-height: 1.4;
 }
 
+.h3-detail {
+  font-family: "vcr_osd_monoregular";
+  color: #f0f4ef;
+  font-size: 1.5rem;
+}
+
 .create-form input, 
 .create-form textarea,
 .create-form select {

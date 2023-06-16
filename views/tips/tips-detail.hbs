@@ -2,27 +2,27 @@
 
 <hr />
 
-<h3>Creator:</h3>
-<p>{{oneTipFromDB.userId.username}}</p>
+<h3 class="h3-detail">Creator:</h3>
+<p class="h3-detail">{{oneTipFromDB.userId.username}}</p>
 
 <hr />
 
-<h3>Category:</h3>
-<p>{{oneTipFromDB.category}}</p>
+<h3 class="h3-detail">Category:</h3>
+<p class="h3-detail">{{oneTipFromDB.category}}</p>
 
 <hr />
 
-<h3>Level:</h3>
-<p>{{oneTipFromDB.level}}</p>
+<h3 class="h3-detail">Level:</h3>
+<p class="h3-detail">{{oneTipFromDB.level}}</p>
 
 <hr />
 
-<h3>Description:</h3>
-<p>{{oneTipFromDB.description}}</p>
+<h3 class="h3-detail">Description:</h3>
+<p class="h3-detail" >{{oneTipFromDB.description}}</p>
 
 {{#if isCurrentUser}}
-        <a href="/tips/{{this._id}}/edit">Edit</a>
-        <form action="/tips/{{this._id}}/delete" method="POST">
+        <a href="/tips/{{oneTipFromDB._id}}/edit">Edit</a>
+        <form action="/tips/{{oneTipFromDB._id}}/delete" method="POST">
           <button>Delete</button>
         </form>
       {{/if}}
