@@ -1,7 +1,12 @@
 <h1>Tips for you</h1>
-
+<div class="card-container">
 {{#each tips}}
-  <section>
+  <div class="card">
+
+    <div class="img-box">
+      <img class="card-img" src="{{imageUrl}}" alt="image of the tip" />
+    </div>
+    <br />
     <p>
       Title:
       {{this.title}}
@@ -22,12 +27,15 @@
       <a href="/tips/{{this._id}}">More details</a>
 
       {{#if isCurrentUser}}
-        <a href="/tips/{{this._id}}/edit">Edit</a>
+        <a type="button" class="btn btn-outline-success" href="/tips/{{this._id}}/edit">Edit</a>
         <form action="/tips/{{this._id}}/delete" method="POST">
-          <button>Delete</button>
+          <button type="button" class="btn btn-outline-success">Delete</button>
         </form>
       {{/if}}
 
     </p>
-  </section>
+  </div>
+{{else}}
+  <p>There are no tips yet!</p>
 {{/each}}
+</div>

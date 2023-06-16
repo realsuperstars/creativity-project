@@ -4,14 +4,14 @@
 
 <form action="/tips/{{_id}}/edit" method="post">
   <label> Title:
-    <input type="text" name="title" value="{{title}}" />
+    <input type="text" name="title" value="{{title}}" required />
   </label>
 
 
 
 <label>
   Level:
-  <select name="level">
+  <select name="level" required>
       <option value="beginner">Beginner</option>
       <option value="intermediate">Intermediate</option>
       <option value="advanced">Advanced</option>
@@ -20,7 +20,7 @@
 
 <label>
   Category:
-  <select name="category">
+  <select name="category" required>
    
       <option value="category1">Category 1</option>
       <option value="category2">Category 2</option>
@@ -32,8 +32,13 @@
 
 
     <label> Description:
-    <textarea name="description" cols="30" rows="4">{{description}}</textarea>
+    <textarea name="description" cols="30" rows="4" required >{{description}}</textarea>
   </label>
+
+ <!-- <label>
+      Image:
+      <input type="file" name="tip-cover-image" required />
+    </label>  -->
 
   <button>Save changes</button>
 </form>

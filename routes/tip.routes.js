@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const fileUploader = require('../config/cloudinary.config');
 
 const Tip = require("../models/Tip.model");
 const User = require("../models/User.model");
@@ -8,33 +9,7 @@ const User = require("../models/User.model");
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
-///Display all the tips
-
-// // Pass the data to the template
-// res.render('tips-list', { tip, isCurrentUser });
-
-// router.get("/", (req, res, next) => {
-
-//   const currentUser = req.session.currentUser // the currently logged-in user object
-// const isCurrentUser = (userId._id === currentUser._id); // Perform the logical comparison
-
-//   Tip.find()
-//   .populate("userId")
-//     .then((tipsFromDB) => {
-//       console.log(tipsFromDB)
-
-//       const data = {
-//         tips: tipsFromDB,
-//       };
-
-//       res.render("tips/tips-list", data);
-//     })
-//     .catch((e) => {
-//       console.log("error getting tips from DB", e);
-//       next(e);
-//     });
-// });
-
+// GET // Display all the tips
 router.get("/", (req, res, next) => {
   const currentUser = req.session.currentUser; // the currently logged-in user object
   
@@ -70,23 +45,24 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 });
 
 // POST process the form to create a tip --- /tips/create
-router.post("/create", (req, res, next) => {
+router.post("/create",fileUploader.single('tip-cover-image'), (req, res, next) => { 
   const newTip = {
-    title: req.body.title,
-    level: req.body.level,
-    category: req.body.category,
-    description: req.body.description,
-    userId: req.session.currentUser._id,
+    title: req.body?.title,
+    level: req.body?.level,
+    category: req.body?.category,
+    description: req.body?.description,
+    userId: req.session?.currentUser._id,
+    imageUrl: req.file?.path // optional chain
   };
 
   Tip.create(newTip)
-    // .populate("userId") // POPULATE to display user name associated with a this tip
+   
     .then((newTip) => {
       res.redirect("/tips");
     })
     .catch((e) => {
       console.log("error creating a new tip", e);
-      next(e);
+      res.render("tips/create-tip", { errorMessage:  "All fields are required." })
     });
 });
 
